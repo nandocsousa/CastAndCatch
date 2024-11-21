@@ -8,6 +8,9 @@ public class UIController : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject volumeMenu;
     public GameObject inventoryMenu;
+    public GameObject shopMenu;
+    public GameObject buyMenu;
+    public GameObject sellMenu;
 
     private GameObject currentMenu;
 
@@ -19,7 +22,10 @@ public class UIController : MonoBehaviour
         {
             { "PauseMenu", pauseMenu },
             { "VolumeMenu", volumeMenu },
-            { "InventoryMenu",  inventoryMenu }
+            { "InventoryMenu",  inventoryMenu },
+            { "ShopMenu", shopMenu },
+            { "BuyMenu", buyMenu },
+            { "SellMenu", sellMenu }
         };
 
         CloseAllMenus();
@@ -64,6 +70,10 @@ public class UIController : MonoBehaviour
 
     public void ReturnToPreviousMenu()
     {
-        OpenMenu("PauseMenu");
+        if (currentMenu == buyMenu || currentMenu == sellMenu)
+        {
+            OpenMenu("ShopMenu");
+        }
+        else OpenMenu("PauseMenu");
     }
 }
