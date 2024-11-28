@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 277475322}
   - component: {fileID: 277475321}
+  - component: {fileID: 277475323}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -168,6 +169,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &277475323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277475320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edceeca622d722d42934381f142cd34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &597644744
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,14 +267,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597644744}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.49, z: -10}
+  m_LocalRotation: {x: -0, y: -0.8340402, z: -0, w: 0.55170363}
+  m_LocalPosition: {x: 7.0564246, y: 13.49, z: 0.66759443}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1136825522}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -113.032, z: 0}
 --- !u!114 &597644748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,16 +415,65 @@ PrefabInstance:
       propertyPath: m_Name
       value: FishingRod
       objectReference: {fileID: 0}
+    - target: {fileID: 4244232334542991042, guid: c825848b76596fe46b3c5b1645e07a0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3145486546315867851, guid: c825848b76596fe46b3c5b1645e07a0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1136825526}
   m_SourcePrefab: {fileID: 100100000, guid: c825848b76596fe46b3c5b1645e07a0f, type: 3}
 --- !u!4 &1136825522 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1008614119549301828, guid: c825848b76596fe46b3c5b1645e07a0f, type: 3}
   m_PrefabInstance: {fileID: 1136825521}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1136825523 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3850257408821323806, guid: c825848b76596fe46b3c5b1645e07a0f, type: 3}
+  m_PrefabInstance: {fileID: 1136825521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1136825524 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3145486546315867851, guid: c825848b76596fe46b3c5b1645e07a0f, type: 3}
+  m_PrefabInstance: {fileID: 1136825521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!120 &1136825525 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 6615819540078882380, guid: c825848b76596fe46b3c5b1645e07a0f, type: 3}
+  m_PrefabInstance: {fileID: 1136825521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1136825526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136825524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d530b0365225649bf63ad8d3c2d344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterAreaRadius: 3.09
+  waterAreaCenter: {x: 20, y: 0, z: 0}
+  _lureSpawnPoint: {fileID: 1136825523}
+  _lurePrefab: {fileID: 7801875858363536458, guid: 0496bb465d7ec7c40afb95382cfdcfe3, type: 3}
+  _lureRigidbody: {fileID: 0}
+  _lureLineRenderer: {fileID: 1136825525}
+  _minLaunchSpeed: 1.5
+  _stopLaunchThresholdSpeed: 1
+  _peakAcceleration: 0
+  _launchForceMultiplier: 10
+  _minWaitTime: 2
+  _maxWaitTime: 5
+  _randomWaitTime: 0
+  initialLatitude: 0
+  initialLongitude: 0
 --- !u!1 &1178026163
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class OverpassAPIHandler : MonoBehaviour
     private const string OverpassUrl = "https://overpass-api.de/api/interpreter";
 
     // Retrieves water bodies("natural"="water") within Portugal's bounding box
-    private const string QueryPortugalWaterBodies = "[out:json];(way[\"natural\"=\"water\"](38.0,-9.5,41.9,-6.2););out body;";
+    private const string QueryPortoWaterBodies = "[out:json];(way[\"natural\"=\"water\"](41.013,-8.881,41.367,-8.193););out body;";
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class OverpassAPIHandler : MonoBehaviour
     private IEnumerator FetchWaterBodies()
     {
         // Encode the query for the URL
-        string url = OverpassUrl + "?data=" + UnityWebRequest.EscapeURL(QueryPortugalWaterBodies);
+        string url = OverpassUrl + "?data=" + UnityWebRequest.EscapeURL(QueryPortoWaterBodies);
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
