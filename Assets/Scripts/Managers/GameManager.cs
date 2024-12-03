@@ -82,5 +82,10 @@ public class GameManager : MonoBehaviour
 	{
 		return _totalMoney;
 	}
+
+	public void SendLureCoordinates(double longitude, double latitude)
+	{
+
+	}
 	#endregion
 }

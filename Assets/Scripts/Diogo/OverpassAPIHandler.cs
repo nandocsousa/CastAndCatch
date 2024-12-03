@@ -16,6 +16,7 @@ public class OverpassAPIHandler : MonoBehaviour
         StartCoroutine(FetchWaterBodies());
     }
 
+
     private IEnumerator FetchWaterBodies()
     {
         // Encode the query for the URL

@@ -1,0 +1,670 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetTopologySuite.IO.GeoJSON</name>
+    </assembly>
+    <members>
+        <member name="T:NetTopologySuite.IO.Converters.AttributesTableConverter">
+            <summary>
+            Converts IAttributesTable object to its JSON representation.
+            </summary>
+        </member>
+        <member name="P:NetTopologySuite.IO.Converters.AttributesTableConverter.WriteIdToProperties">
+            <summary>
+            Gets or sets a value indicating that a feature's id property should be written to the properties block as well
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.AttributesTableConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Writes the JSON representation of the object.
+            </summary>
+            <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param>
+            <param name="value">The value.</param>
+            <param name="serializer">The calling serializer.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.AttributesTableConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Reads the JSON representation of the object.
+            </summary>
+            <param name="reader">The <see cref="T:Newtonsoft.Json.JsonReader"/> to read from.</param>
+            <param name="objectType">Type of the object.</param>
+            <param name="existingValue">The existing value of object being read.</param>
+            <param name="serializer">The calling serializer.</param>
+            <returns>
+            The object value.
+            </returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.AttributesTableConverter.CanConvert(System.Type)">
+            <summary>
+            Determines whether this instance can convert the specified object type.
+            </summary>
+            <param name="objectType">Type of the object.</param>
+            <returns>
+              <c>true</c> if this instance can convert the specified object type; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.Converters.EnvelopeConverter">
+            <summary>
+            Converts <see cref="T:NetTopologySuite.Geometries.Envelope"/>s to and from JSON
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.EnvelopeConverter.#ctor">
+            <summary>
+            Creates an instance of this class that is using a <see cref="F:NetTopologySuite.Geometries.PrecisionModels.Floating"/> precision model.
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.EnvelopeConverter.#ctor(NetTopologySuite.Geometries.PrecisionModel)">
+            <summary>
+            Creates an instance of this class using the provided precision model
+            </summary>
+            <param name="precisionModel">A precision model</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.EnvelopeConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Writes an <see cref="T:NetTopologySuite.Geometries.Envelope"/> to JSON
+            </summary>
+            <param name="writer">The writer</param>
+            <param name="value">The envelope</param>
+            <param name="serializer">The serializer</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.EnvelopeConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Reads an <see cref="T:NetTopologySuite.Geometries.Envelope"/> from JSON
+            </summary>
+            <param name="reader">The reader</param>
+            <param name="objectType">The object type</param>
+            <param name="existingValue">The existing value</param>
+            <param name="serializer">The serializer</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.EnvelopeConverter.CanConvert(System.Type)">
+            <summary>
+            Predicate function to check if an instance of <paramref name="objectType"/> can be converted using this converter.
+            </summary>
+            <param name="objectType">The type of the object to convert</param>
+            <returns><value>true</value> if the conversion is possible, otherwise <value>false</value></returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.Converters.FeatureCollectionConverter">
+            <summary>
+            Converts FeatureCollection object to its JSON representation.
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.FeatureCollectionConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Writes a feature collection in its JSON representation
+            </summary>
+            <param name="writer">The writer</param>
+            <param name="value">The value</param>
+            <param name="serializer">The serializer</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.FeatureCollectionConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Reads a feature collection from its JSON representation
+            </summary>
+            <param name="reader">The reader</param>
+            <param name="objectType">The object type</param>
+            <param name="existingValue">The existing value</param>
+            <param name="serializer">The serializer</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.FeatureCollectionConverter.CanConvert(System.Type)">
+            <summary>
+            Predicate function to check if an instance of <paramref name="objectType"/> can be converted using this converter.
+            </summary>
+            <param name="objectType">The type of the object to convert</param>
+            <returns><value>true</value> if the conversion is possible, otherwise <value>false</value></returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.Converters.FeatureConverter">
+            <summary>
+            Converts Feature object to its JSON representation.
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.FeatureConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Writes the JSON representation of the object.
+            </summary>
+            <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param>
+            <param name="value">The value.</param>
+            <param name="serializer">The calling serializer.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.FeatureConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Reads the JSON representation of the object.
+            </summary>
+            <param name="reader">The <see cref="T:Newtonsoft.Json.JsonReader"/> to read from.</param>
+            <param name="objectType">Type of the object.</param>
+            <param name="existingValue">The existing value of object being read.</param>
+            <param name="serializer">The calling serializer.</param>
+            <returns>
+            The object value.
+            </returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.FeatureConverter.CanConvert(System.Type)">
+            <summary>
+            Determines whether this instance can convert the specified object type.
+            </summary>
+            <param name="objectType">Type of the object.</param>
+            <returns>
+              <c>true</c> if this instance can convert the specified object type; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.Converters.GeometryArrayConverter">
+            <summary>
+            Converts an array of <see cref="T:NetTopologySuite.Geometries.Geometry"/>s to and from JSON
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryArrayConverter.#ctor">
+            <summary>
+            Creates an instance of this class using <see cref="P:NetTopologySuite.IO.GeoJsonSerializer.Wgs84Factory"/>
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryArrayConverter.#ctor(NetTopologySuite.Geometries.GeometryFactory)">
+            <summary>
+            Creates an instance of this class using the provided <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/>
+            </summary>
+            <param name="factory">The factory</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryArrayConverter.#ctor(NetTopologySuite.Geometries.GeometryFactory,System.Int32)">
+            <summary>
+            Creates an instance of this class using the provided <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/>
+            </summary>
+            <param name="factory">The factory</param>
+            <param name="dimension">The number of dimensions to handle.  Must be 2 or 3.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryArrayConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Writes an array of <see cref="T:NetTopologySuite.Geometries.Geometry"/>s to JSON
+            </summary>
+            <param name="writer">The writer</param>
+            <param name="value">The geometry</param>
+            <param name="serializer">The serializer</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryArrayConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Reads an array of <see cref="T:NetTopologySuite.Geometries.Geometry"/>s from JSON
+            </summary>
+            <param name="reader">The reader</param>
+            <param name="objectType">The object type</param>
+            <param name="existingValue">The existing value</param>
+            <param name="serializer">The serializer</param>
+            <returns>The geometry array read</returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryArrayConverter.CanConvert(System.Type)">
+            <summary>
+            Predicate function to check if an instance of <paramref name="objectType"/> can be converted using this converter.
+            </summary>
+            <param name="objectType">The type of the object to convert</param>
+            <returns><value>true</value> if the conversion is possible, otherwise <value>false</value></returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.Converters.GeometryConverter">
+            <summary>
+            Converts a <see cref="T:NetTopologySuite.Geometries.Geometry"/> to and from its JSON representation
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryConverter.#ctor">
+            <summary>
+            Creates an instance of this class using <see cref="P:NetTopologySuite.IO.GeoJsonSerializer.Wgs84Factory"/> to create geometries.
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryConverter.#ctor(NetTopologySuite.Geometries.GeometryFactory)">
+            <summary>
+            Creates an instance of this class using the provided <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/> to create geometries.
+            </summary>
+            <param name="geometryFactory">The geometry factory.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryConverter.#ctor(NetTopologySuite.Geometries.GeometryFactory,System.Int32)">
+            <summary>
+            Creates an instance of this class using the provided <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/> to create geometries.
+            </summary>
+            <param name="geometryFactory">The geometry factory.</param>
+            <param name="dimension">The number of dimensions to handle.  Must be 2 or 3.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Writes a geometry to its JSON representation
+            </summary>
+            <param name="writer">The writer</param>
+            <param name="value">The value</param>
+            <param name="serializer">The serializer</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Reads a geometry from its JSON representation.
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="existingValue"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.Converters.GeometryConverter.CanConvert(System.Type)">
+            <summary>
+            Predicate function to check if an instance of <paramref name="objectType"/> can be converted using this converter.
+            </summary>
+            <param name="objectType">The type of the object to convert</param>
+            <returns><value>true</value> if the conversion is possible, otherwise <value>false</value></returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.AttributesTableExtensions">
+            <summary>
+            Defines extensions for <see cref="T:NetTopologySuite.Features.IAttributesTable"/>.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.AttributesTableExtensions.IdPropertyName">
+            <summary>
+            The name of the "id" property.
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.AttributesTableExtensions.TryGetId(NetTopologySuite.Features.IAttributesTable,System.Object@)">
+            <summary>
+            Gets the GeoJSON-defined "id" property, if present.
+            </summary>
+            <param name="attributes">
+            The <see cref="T:NetTopologySuite.Features.IAttributesTable"/> to query, or <see langword="null"/>.
+            </param>
+            <param name="id">
+            Receives the "id" value, if present, <see langword="null"/> otherwise.
+            </param>
+            <returns>
+            <see langword="true"/> if the "id" value was present, <see langword="false"/> otherwise.
+            </returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.GeoJsonObjectType">
+            <summary>
+            Defines the GeoJSON Objects types as defined in the <a href="https://tools.ietf.org/html/rfc7946#section-3.1">geojson.org v1.0 spec</a>.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.Point">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.1.2">Point</a> type.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.MultiPoint">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.1.3">MultiPoint</a> type.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.LineString">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.1.4">LineString</a> type.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.MultiLineString">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.1.5">MultiLineString</a> type.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.Polygon">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.1.6">Polygon</a> type.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.MultiPolygon">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.1.7">MultiPolygon</a> type.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.GeometryCollection">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.1.8">GeometryCollection</a> type.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.Feature">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.2">Feature</a> type.
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.GeoJsonObjectType.FeatureCollection">
+            <summary>
+            Defines the <a href="https://tools.ietf.org/html/rfc7946#section-3.3">FeatureCollection</a> type.
+            </summary>
+        </member>
+        <member name="T:NetTopologySuite.IO.GeoJsonReader">
+            <summary>
+            Represents a GeoJSON Reader allowing for deserialization of various GeoJSON elements 
+            or any object containing GeoJSON elements.
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonReader.#ctor">
+            <summary>
+            Creates an instance of this class
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonReader.#ctor(NetTopologySuite.Geometries.GeometryFactory,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Creates an instance of this class using the provided <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/> and
+            <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
+            </summary>
+            <param name="factory">The factory to use when creating geometries</param>
+            <param name="serializerSettings">The serializer setting</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonReader.#ctor(NetTopologySuite.Geometries.GeometryFactory,Newtonsoft.Json.JsonSerializerSettings,System.Int32)">
+            <summary>
+            Creates an instance of this class using the provided <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/> and
+            <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
+            </summary>
+            <param name="factory">The factory to use when creating geometries</param>
+            <param name="serializerSettings">The serializer setting</param>
+            <param name="dimension">The number of dimensions to handle.  Must be 2 or 3.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonReader.#ctor(NetTopologySuite.Geometries.GeometryFactory,Newtonsoft.Json.JsonSerializerSettings,System.Int32,NetTopologySuite.IO.RingOrientationOption)">
+            <summary>
+            Creates an instance of this class using the provided <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/> and
+            <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
+            </summary>
+            <param name="factory">The factory to use when creating geometries</param>
+            <param name="serializerSettings">The serializer setting</param>
+            <param name="dimension">The number of dimensions to handle.  Must be 2 or 3.</param>
+            <param name="ringOrientationOption"></param>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonReader.Read``1(System.String)">
+            <summary>
+            Reads the specified json.
+            </summary>
+            <typeparam name="TObject">The type of the object.</typeparam>
+            <param name="json">The json.</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonReader.Read``1(Newtonsoft.Json.JsonReader)">
+            <summary>
+            Reads the specified json.
+            </summary>
+            <typeparam name="TObject">The type of the object.</typeparam>
+            <param name="json">The json.</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.GeoJsonSerializer">
+            <summary>
+            Json Serializer with support for GeoJson object structure.
+            </summary>
+        </member>
+        <member name="P:NetTopologySuite.IO.GeoJsonSerializer.Wgs84Factory">
+            <summary>
+            Gets a default GeometryFactory
+            </summary>
+        </member>
+        <member name="P:NetTopologySuite.IO.GeoJsonSerializer.RingOrientationOption">
+            <summary>
+            Gets or sets a value indicating if the polygon ring orientation must adhere to
+            rule defined in RFC7964 §3.1.6
+            </summary>
+            <remarks>The default is <see cref="F:NetTopologySuite.IO.RingOrientationOption.EnforceRfc9746"/></remarks>
+            <a href="https://www.rfc-editor.org/rfc/rfc7946#section-3.1.6">Polygon</a>
+        </member>
+        <member name="P:NetTopologySuite.IO.GeoJsonSerializer.Dimension">
+            <summary>
+            Gets or sets a value indicating the number of dimensions the serializer should handle
+            </summary>
+            <remarks>Value must be 2 or 3.</remarks>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.Create">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer
+            </summary>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+            <remarks>
+            Calls <see cref="M:NetTopologySuite.IO.GeoJsonSerializer.CreateDefault"/> internally.
+            </remarks>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.CreateDefault">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer
+            </summary>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+            <remarks>
+            The <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/> uses WGS-84.
+            </remarks>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.CreateDefault(Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer
+            </summary>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+            <remarks>
+            The <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/> uses WGS-84.
+            </remarks>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.CreateDefault(Newtonsoft.Json.JsonSerializerSettings,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer
+            </summary>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+            <remarks>
+            The <see cref="T:NetTopologySuite.Geometries.GeometryFactory"/> uses WGS-84.
+            </remarks>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.Create(NetTopologySuite.Geometries.GeometryFactory)">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer
+            </summary>
+            <param name="factory">
+            A factory to use when creating geometries. The factories <see cref="T:NetTopologySuite.Geometries.PrecisionModel"/>
+            is also used to format <see cref="P:NetTopologySuite.Geometries.Coordinate.X"/> and <see cref="P:NetTopologySuite.Geometries.Coordinate.Y"/> of the coordinates.
+            </param>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+            <remarks>
+            Creates a serializer using <see cref="M:NetTopologySuite.IO.GeoJsonSerializer.Create(NetTopologySuite.Geometries.GeometryFactory,System.Int32)"/> internally.
+            </remarks>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.Create(NetTopologySuite.Geometries.GeometryFactory,System.Int32)">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer
+            </summary>
+            <param name="factory">
+            A factory to use when creating geometries. The factories <see cref="T:NetTopologySuite.Geometries.PrecisionModel"/>
+            is also used to format <see cref="P:NetTopologySuite.Geometries.Coordinate.X"/> and <see cref="P:NetTopologySuite.Geometries.Coordinate.Y"/> of the coordinates.
+            </param>
+            <param name="dimension">
+            A number of dimensions that are handled.  Must be 2 or 3.
+            </param>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+            <remarks>
+            Creates a serializer using <see cref="M:NetTopologySuite.IO.GeoJsonSerializer.Create(Newtonsoft.Json.JsonSerializerSettings,NetTopologySuite.Geometries.GeometryFactory,System.Int32)"/> internally.
+            </remarks>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.Create(Newtonsoft.Json.JsonSerializerSettings,NetTopologySuite.Geometries.GeometryFactory)">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer using the provider serializer settings and geometry factory
+            </summary>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.Create(Newtonsoft.Json.JsonSerializerSettings,NetTopologySuite.Geometries.GeometryFactory,System.Int32)">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer using the provider serializer settings and geometry factory
+            </summary>
+            <param name="settings">
+            Serializer settings
+            </param>
+            <param name="factory">
+            The factory to use when creating a new geometry
+            </param>
+            <param name="dimension">
+            A number of dimensions that are handled.  Must be 2 or 3.
+            </param>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.Create(Newtonsoft.Json.JsonSerializerSettings,NetTopologySuite.Geometries.GeometryFactory,System.Int32,NetTopologySuite.IO.RingOrientationOption)">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer using the provider serializer settings and geometry factory
+            </summary>
+            <param name="settings">
+            Serializer settings
+            </param>
+            <param name="factory">
+            The factory to use when creating a new geometry
+            </param>
+            <param name="dimension">
+            A number of dimensions that are handled.  Must be 2 or 3.
+            </param>
+            <param name="enforceRingOrientation">
+            <see langword="true"/> to ensure that rings are oriented according to the GeoJSON rule,
+            <see langword="false"/> to write out the coordinates in the order they are given.
+            </param>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonSerializer.Create(Newtonsoft.Json.JsonSerializerSettings,NetTopologySuite.Geometries.GeometryFactory,System.Int32,NetTopologySuite.IO.RingOrientationOption,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Factory method to create a (Geo)JsonSerializer using the provider serializer settings and geometry factory
+            </summary>
+            <param name="settings">
+            Serializer settings
+            </param>
+            <param name="factory">
+            The factory to use when creating a new geometry
+            </param>
+            <param name="dimension">
+            A number of dimensions that are handled.  Must be 2 or 3.
+            </param>
+            <param name="enforceRingOrientation">
+            <see langword="true"/> to ensure that rings are oriented according to the GeoJSON rule,
+            <see langword="false"/> to write out whatever we have.
+            </param>
+            <param name="coordinateSerializerSettings">
+            The <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/> to use when writing out "coordinates" arrays,
+            or <see langword="null"/> if we should just use <paramref name="settings"/>.  Intended
+            to help fine-tune output, as "coordinates" arrays tend to be extremely long with many
+            nested arrays that can look better stuffed onto one line by themselves, even if the rest
+            of the JSON object is indented and split across multiple lines.
+            </param>
+            <returns>
+            A <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
+            </returns>
+        </member>
+        <member name="T:NetTopologySuite.IO.GeoJsonWriter">
+            <summary>
+            Represents a GeoJSON Writer allowing for serialization of various GeoJSON elements 
+            or any object containing GeoJSON elements.
+            </summary>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.#ctor">
+            <summary>
+            Creates an instance of this class
+            </summary>
+        </member>
+        <member name="P:NetTopologySuite.IO.GeoJsonWriter.SerializerSettings">
+            <summary>
+            Gets or sets a value that is used to create and configure the underlying <see cref="T:NetTopologySuite.IO.GeoJsonSerializer"/>.
+            </summary>
+        </member>
+        <member name="P:NetTopologySuite.IO.GeoJsonWriter.RingOrientationOption">
+            <summary>
+            Gets or sets a value indicating if the polygon ring orientation must adhere to
+            rule defined in RFC7964 §3.1.6
+            </summary>
+            <a href="https://www.rfc-editor.org/rfc/rfc7946#section-3.1.6">Polygon</a>
+        </member>
+        <member name="P:NetTopologySuite.IO.GeoJsonWriter.Dimension">
+            <summary>
+            Gets or sets a value indicating the number of dimensions the serializer should handle
+            </summary>
+            <remarks>Value must be 2 or 3.</remarks>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.Write(NetTopologySuite.Geometries.Geometry)">
+            <summary>
+            Writes the specified geometry.
+            </summary>
+            <param name="geometry">The geometry.</param>
+            <returns>A string representing the geometry's JSON representation</returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.Write(NetTopologySuite.Geometries.Geometry,Newtonsoft.Json.JsonWriter)">
+            <summary>
+            Writes the specified geometry.
+            </summary>
+            <param name="geometry">The geometry.</param>
+            <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.Write(NetTopologySuite.Features.Feature)">
+            <summary>
+            Writes the specified feature.
+            </summary>
+            <param name="feature">The feature.</param>
+            <returns>A string representing the feature's JSON representation</returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.Write(NetTopologySuite.Features.Feature,Newtonsoft.Json.JsonWriter)">
+            <summary>
+            Writes the specified feature.
+            </summary>
+            <param name="feature">The feature.</param>
+            <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.Write(NetTopologySuite.Features.FeatureCollection)">
+            <summary>
+            Writes the specified feature collection.
+            </summary>
+            <param name="featureCollection">The feature collection.</param>
+            <returns>A string representing the feature collection's JSON representation</returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.Write(NetTopologySuite.Features.FeatureCollection,Newtonsoft.Json.JsonWriter)">
+            <summary>
+            Writes the specified feature collection.
+            </summary>
+            <param name="featureCollection">The feature collection.</param>
+            <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.Write(System.Object)">
+            <summary>
+            Writes any specified object.
+            </summary>
+            <param name="value">Any object.</param>
+            <returns>A string representing the object's JSON representation</returns>
+        </member>
+        <member name="M:NetTopologySuite.IO.GeoJsonWriter.Write(System.Object,Newtonsoft.Json.JsonWriter)">
+            <summary>
+            Writes any specified object.
+            </summary>
+            <param name="value">Any object.</param>
+            <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter"/> to write to.</param>
+        </member>
+        <member name="T:NetTopologySuite.IO.RingOrientationOption">
+            <summary>
+            An enumeration of possible ring orientation modes that can be applied when writing GeoJSON
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.RingOrientationOption.DoNotModify">
+            <summary>
+            Polygon ring orientation is not altered
+            </summary>
+        </member>
+        <member name="F:NetTopologySuite.IO.RingOrientationOption.EnforceRfc9746">
+            <summary>
+            Polygon ring orientation is ensured to be how it is definded in RFC7946 §3.1.6:
+            </summary>
+            <remarks>
+            This means:
+            <list type="bullet">
+            <item><term>Exterior</term><description>Counter-Clockwise</description></item>
+            <item><term>Interior</term><description>Clockwise</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="F:NetTopologySuite.IO.RingOrientationOption.NtsGeoJsonV2">
+            <summary>
+            Polygon ring orientation is altered according to how it was done in NetTopologySuite.IO.GeoJSON v2 due to misinterpreting right-hand-rule:
+            </summary>
+            <remarks>
+            This means:
+            <list type="bullet">
+            <item><term>Exterior</term><description>Clockwise</description></item>
+            <item><term>Interior</term><description>Counter-Clockwise</description></item>
+            </list>
+            </remarks>
+        </member>
+    </members>
+</doc>

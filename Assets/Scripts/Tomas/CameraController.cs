@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class TestCameraController : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
 	private void Start()
 	{
@@ -10,7 +11,12 @@ public class TestCameraController : MonoBehaviour
 		{
 			Input.gyro.enabled = true;
 		}
+		else
+		{
+			Debug.LogError("Gyroscope is not supported on this device.");
+		}
 	}
+
 
 	private void Update()
 	{
