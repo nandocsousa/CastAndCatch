@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
 		}
 		else
 		{
-			Debug.LogError("Gyroscope is not supported on this device.");
+			//Debug.LogError("Gyroscope is not supported on this device.");
 		}
 	}
 
