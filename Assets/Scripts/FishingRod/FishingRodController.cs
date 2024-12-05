@@ -11,6 +11,7 @@ public class FishingRodController : MonoBehaviour
 {
 	#region EVENTS
 	public static event Action E_FishBiteTimerOver;
+	public static event Action<double, double> E_LureLanded;
 	#endregion
 	#region VARIABLES
 	[Header("COMPONENTS")]
@@ -29,6 +30,9 @@ public class FishingRodController : MonoBehaviour
 	[SerializeField] private float _maxWaitTime = 5f; //maximum wait time for a fish to bite
 	[SerializeField] private float _randomWaitTime = 0f;
 
+	[SerializeField] private float _yThresholdOffset = -2f; //offset for checking when the lure is below a certain position
+	private float _initialYPosition; //the initial y pos of the lure
+
 	private bool _isCasting = false; //checks when the player is trying to cast a lure
 	private FishingStates _currentState = FishingStates.Idle; //initial state is idle
 	#endregion
@@ -42,7 +46,12 @@ public class FishingRodController : MonoBehaviour
 		}
 	}
 
-	private void Update()
+    private void Start()
+    {
+		_initialYPosition = _lureSpawnPoint.position.y;
+    }
+
+    private void Update()
 	{
         #region FISHING STATE LOGIC
         switch (_currentState)
@@ -82,6 +91,11 @@ public class FishingRodController : MonoBehaviour
 
 				_lureLineRenderer.SetPosition(0, _lureSpawnPoint.position); //start pos of the fishing line
 				_lureLineRenderer.SetPosition(1, _currentLure.transform.position); //end pos of the fishing line
+
+				if (_currentLure.transform.position.y < _initialYPosition + _yThresholdOffset)
+				{
+					OnLureBelowThreshold();
+				}
 
 				_randomWaitTime -= Time.deltaTime;
 
@@ -131,6 +145,12 @@ public class FishingRodController : MonoBehaviour
 	private void GenerateRandomWaitTime(float minTime, float maxTime)
 	{
 		_randomWaitTime = UnityEngine.Random.Range(minTime, maxTime);
+	}
+
+	private void OnLureBelowThreshold()
+	{
+		Debug.Log("Lure is below threshold");
+		//E_LureLanded?.Invoke();
 	}
 
 	//this function waits for a certain amount of time before announcing that the time has ended
