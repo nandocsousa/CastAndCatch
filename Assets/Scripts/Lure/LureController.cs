@@ -31,19 +31,24 @@ public class LureController : MonoBehaviour
 	//test method not sure about it yet
 	private void OnCollisionEnter(Collision collision)
 	{
-		if (GameManager.Instance.IsCheating())
+		if (collision.gameObject.CompareTag("Water") || collision.gameObject.CompareTag("Ground"))
 		{
-			if (collision.gameObject.CompareTag("Water"))
-			{
-				_rigidbody.isKinematic = true;
-				E_LandedOnWater?.Invoke();
-			}
-			else if (collision.gameObject.CompareTag("Ground"))
-			{
-				E_LandedOnGround?.Invoke();
-				Destroy(gameObject);
-			}
+			_rigidbody.isKinematic = true;
+			//Destroy(gameObject);
 		}
+		//if (GameManager.Instance.IsCheating())
+		//{
+		//	if (collision.gameObject.CompareTag("Water"))
+		//	{
+		//		_rigidbody.isKinematic = true;
+		//		E_LandedOnWater?.Invoke();
+		//	}
+		//	else if (collision.gameObject.CompareTag("Ground"))
+		//	{
+		//		E_LandedOnGround?.Invoke();
+		//		Destroy(gameObject);
+		//	}
+		//}
 	}
 
 	#region EVENT HANDLERS

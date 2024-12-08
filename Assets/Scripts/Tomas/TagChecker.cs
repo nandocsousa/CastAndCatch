@@ -3,20 +3,57 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+using TMPro; //for testing, remove after
+using System;
 
 public class TagChecker : MonoBehaviour
 {
+    public static event Action<bool> E_LureLandedOnWater;
+
     private const string OverpassUrl = "https://overpass-api.de/api/interpreter";
+    //public double testLatitude = 41.146246;
+    //public double testLongitude = -8.626450;
+    public TextMeshProUGUI isonwatertext; //for testing, remove after
+    public TextMeshProUGUI landedonwatertext;
+    private bool iswater = false; //for testing, remove after
+    private double latitude;
+    private double longitude;
+    private bool landedInWater = false;
 
-    private void Update()
+	private void OnEnable()
+	{
+        GameManager.E_SendLureLandCoords += HandleLureLandCoords;
+
+        FishingRodController.E_LureLanded += CheckPointTags;
+	}
+
+	private void OnDisable()
+	{
+		GameManager.E_SendLureLandCoords -= HandleLureLandCoords;
+
+		FishingRodController.E_LureLanded -= CheckPointTags;
+	}
+
+	private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (iswater)
         {
-            double testLatitude = 41.144523;
-            double testLongitude = -8.626097;
-
-            CheckPointTags(testLatitude, testLongitude);
+			landedonwatertext.text = "LANDED WATER: TRUE";
         }
+        else
+        {
+			landedonwatertext.text = "LANDED WATER: FALSE";
+        }
+    }
+
+    public void CheatTesting()
+    {
+        E_LureLandedOnWater?.Invoke(true);
+    }
+
+    public void TryCheckPointTags()
+    {
+        //CheckPointTags(GameManager.Instance.GetPlayerLatitude(), GameManager.Instance.GetPlayerLongitude());
     }
 
     public void CheckPointTags(double latitude, double longitude)
@@ -26,7 +63,7 @@ public class TagChecker : MonoBehaviour
 
     private IEnumerator FetchTags(double latitude, double longitude)
     {
-        string query = $@"[out:json];(node(around:50,{latitude},{longitude})[""natural""=""water""];way(around:50,{latitude},{longitude})[""natural""=""water""];relation(around:50,{latitude},{longitude})[""natural""=""water""];);out body;>;out skel qt;";
+        string query = $@"[out:json];(node(around:20,{latitude},{longitude})[""natural""=""water""];way(around:20,{latitude},{longitude})[""natural""=""water""];relation(around:20,{latitude},{longitude})[""natural""=""water""];);out body;>;out skel qt;";
         string url = $"{OverpassUrl}?data={query}";
         Debug.Log($"Request URL: {url}");
 
@@ -57,10 +94,21 @@ public class TagChecker : MonoBehaviour
             if (element["tags"]?["natural"]?.ToString() == "water")
             {
                 isInWater = true;
+                iswater = true;
                 break;
+            }
+            else
+            {
+                iswater = false;
             }
         }
 
-        Debug.Log($"Point is in water: {isInWater}");
+		E_LureLandedOnWater?.Invoke(isInWater);
+		Debug.Log($"Point is in water: {isInWater}");
+    }
+
+    private void HandleLureLandCoords(double lureLat, double lureLon)
+    {
+        CheckPointTags(lureLat, lureLon);
     }
 }

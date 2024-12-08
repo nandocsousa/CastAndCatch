@@ -1,6 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Android;
 
 //all possible game states
 public enum GameStates { Menu, Fishing};
@@ -10,6 +15,7 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance = null;
 	#region EVENTS
+	public static event Action<double, double> E_SendLureLandCoords;
 	#endregion
 	#region VARIABLES
 	[Header("CHEATS")]
@@ -17,6 +23,18 @@ public class GameManager : MonoBehaviour
 
 	[Header("VALUES")]
 	[SerializeField] private float _totalMoney = 0f; //the total money the player has
+
+	[Header("GPS")]
+	[SerializeField] private bool _locationIsReady = false;
+	[SerializeField] private bool _locationGrantedAndroid = false;
+	private double _playerLatitude;
+	private double _playerLongitude;
+	private double _lureLandedLatitude = 0;
+	private double _lureLandedLongitude = 0;
+
+	private GameObject _dialog = null;
+
+	public TextMeshProUGUI _text;
 	#endregion
 
 	private void OnEnable()
@@ -24,6 +42,10 @@ public class GameManager : MonoBehaviour
 		FishingRodController.E_FishBiteTimerOver += HandleFishBiteTimerOver;
 		FishManager.E_FishDenied += HandleFishDenied;
 		FishManager.E_FishGranted += HandleFishGranted;
+
+		FishingRodController.E_LureLanded += HandleLureLanded;
+
+		TagChecker.E_LureLandedOnWater += testLandWater;
 	}
 
 	private void OnDisable()
@@ -31,6 +53,10 @@ public class GameManager : MonoBehaviour
 		FishingRodController.E_FishBiteTimerOver -= HandleFishBiteTimerOver;
 		FishManager.E_FishDenied -= HandleFishDenied;
 		FishManager.E_FishGranted -= HandleFishGranted;
+
+		FishingRodController.E_LureLanded -= HandleLureLanded;
+
+		TagChecker.E_LureLandedOnWater -= testLandWater;
 	}
 
 	private void Awake()
@@ -47,6 +73,33 @@ public class GameManager : MonoBehaviour
 		}
 
 		DontDestroyOnLoad(gameObject);
+		#endregion
+	}
+
+	private void Start()
+	{
+		#region GPS
+		if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+		{
+			Permission.RequestUserPermission(Permission.FineLocation);
+			_dialog = new GameObject();
+		}
+		else
+		{
+			_locationGrantedAndroid = true;
+			_locationIsReady = NativeGPSPlugin.StartLocation();
+		}
+		#endregion
+	}
+
+	private void Update()
+	{
+		#region GPS
+		if (_locationIsReady)
+		{
+			_playerLatitude = NativeGPSPlugin.GetLatitude();
+			_playerLongitude = NativeGPSPlugin.GetLongitude();
+		}
 		#endregion
 	}
 
@@ -68,6 +121,25 @@ public class GameManager : MonoBehaviour
 	{
 		Debug.Log("Bad luck, couldn't catch anything :(");
 	}
+
+	private void HandleLureLanded(double latitude, double longitude)
+	{
+		_lureLandedLatitude = latitude;
+		_lureLandedLongitude = longitude;
+		E_SendLureLandCoords?.Invoke(latitude, longitude);
+	}
+
+	private void testLandWater(bool onWater)
+	{
+		if (onWater)
+		{
+			_text.text = "LANDED ON WATER TAG";
+		}
+		else
+		{
+			_text.text = "LANDED ON GROUND TAG";
+		}
+	}
 	#endregion
 
 	#region EXTERNAL CALLABLES
@@ -86,6 +158,26 @@ public class GameManager : MonoBehaviour
 	public void SendLureCoordinates(double longitude, double latitude)
 	{
 
+	}
+
+	public double GetPlayerLatitude()
+	{
+		return _playerLatitude;
+	}
+
+	public double GetPlayerLongitude()
+	{
+		return _playerLongitude;
+	}
+
+	public double GetLureLatitude()
+	{
+		return _lureLandedLatitude;
+	}
+
+	public double GetLureLongitude()
+	{
+		return _lureLandedLongitude;
 	}
 	#endregion
 }

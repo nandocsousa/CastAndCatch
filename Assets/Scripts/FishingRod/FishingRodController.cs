@@ -25,12 +25,18 @@ public class FishingRodController : MonoBehaviour
 	[SerializeField] private float _minLaunchSpeed = 1.5f; //minimum speed to start launching lure
 	[SerializeField] private float _stopLaunchThresholdSpeed = 1f; //if the player reaches this speed the launch is over
 	[SerializeField] private float _peakAcceleration = 0f; //the peak acceleration reached while casting the lure
-	[SerializeField] private float _launchForceMultiplier = 10f; //multiplier for the launch force
+	private float _launchForceMultiplier = 10f; //multiplier for the launch force
 	[SerializeField] private float _minWaitTime = 2f; //minimum wait time for a fish to bite
 	[SerializeField] private float _maxWaitTime = 5f; //maximum wait time for a fish to bite
 	[SerializeField] private float _randomWaitTime = 0f;
+	private float _metersPerUnit = 0.2f; //scale factor for converting Unity units into meters
+	private const double _EarthRadius = 6378137.0; //earth radius in meters approximated
 
-	[SerializeField] private float _yThresholdOffset = -2f; //offset for checking when the lure is below a certain position
+	[Header("GPS")]
+	[SerializeField] private double _playerLat;
+	[SerializeField] private double _playerLon;
+
+	private float _yThresholdOffset = -20f; //offset for checking when the lure is below a certain position
 	private float _initialYPosition; //the initial y pos of the lure
 
 	private bool _isCasting = false; //checks when the player is trying to cast a lure
@@ -46,13 +52,25 @@ public class FishingRodController : MonoBehaviour
 		}
 	}
 
-    private void Start()
+	private void OnEnable()
+	{
+		TagChecker.E_LureLandedOnWater += HandleLandedOnWater;
+	}
+
+	private void OnDisable()
+	{
+		TagChecker.E_LureLandedOnWater -= HandleLandedOnWater;
+	}
+
+	private void Start()
     {
 		_initialYPosition = _lureSpawnPoint.position.y;
     }
 
     private void Update()
 	{
+		_playerLat = GameManager.Instance.GetPlayerLatitude();
+		_playerLon = GameManager.Instance.GetPlayerLongitude();
         #region FISHING STATE LOGIC
         switch (_currentState)
 		{
@@ -74,8 +92,8 @@ public class FishingRodController : MonoBehaviour
 					_isCasting = false; //turn of casting
 
 					//subscribe to relevant events
-					LureController.E_LandedOnWater += HandleLandedOnWater;
-					LureController.E_LandedOnGround += HandleLandedOnGround;
+					//LureController.E_LandedOnWater += HandleLandedOnWater;
+					//LureController.E_LandedOnGround += HandleLandedOnGround;
 
 					LaunchLure();
 				}
@@ -84,6 +102,11 @@ public class FishingRodController : MonoBehaviour
 			case FishingStates.Casting:
 				_lureLineRenderer.SetPosition(0, _lureSpawnPoint.position); //start pos of the fishing line
 				_lureLineRenderer.SetPosition(1, _currentLure.transform.position); //end pos of the fishing line
+
+				if (_currentLure.transform.position.y < _initialYPosition + _yThresholdOffset)
+				{
+					OnLureBelowThreshold(_currentLure.transform.position);
+				}
 				break;
 			//in this state the lure successfuly landed in water and is now waiting for a fish
 			case FishingStates.Waiting:
@@ -91,11 +114,6 @@ public class FishingRodController : MonoBehaviour
 
 				_lureLineRenderer.SetPosition(0, _lureSpawnPoint.position); //start pos of the fishing line
 				_lureLineRenderer.SetPosition(1, _currentLure.transform.position); //end pos of the fishing line
-
-				if (_currentLure.transform.position.y < _initialYPosition + _yThresholdOffset)
-				{
-					OnLureBelowThreshold();
-				}
 
 				_randomWaitTime -= Time.deltaTime;
 
@@ -129,7 +147,7 @@ public class FishingRodController : MonoBehaviour
 
 		//adjust the rotation for portrait mode
 		Quaternion rotationFix = Quaternion.Euler(90, 0, 0);
-		Quaternion adjustedRotation = rotationFix * phoneRotation * Quaternion.Euler(0, 0, 180);
+		Quaternion adjustedRotation = rotationFix * phoneRotation;
 
 		//the forward direction taking into account the phones orientation
 		Vector3 launchDirection = adjustedRotation * Vector3.forward;
@@ -147,10 +165,12 @@ public class FishingRodController : MonoBehaviour
 		_randomWaitTime = UnityEngine.Random.Range(minTime, maxTime);
 	}
 
-	private void OnLureBelowThreshold()
+	private void OnLureBelowThreshold(Vector3 lurePosition)
 	{
-		Debug.Log("Lure is below threshold");
-		//E_LureLanded?.Invoke();
+		ConvertUnityPositionToGPS(lurePosition, out double lureLat, out double lureLon);
+		E_LureLanded?.Invoke(lureLat, lureLon);
+
+		//ChangeFishingState(FishingStates.Waiting);
 	}
 
 	//this function waits for a certain amount of time before announcing that the time has ended
@@ -170,6 +190,25 @@ public class FishingRodController : MonoBehaviour
 		_peakAcceleration = 0f;
 		ChangeFishingState(FishingStates.Idle);
 	}
+
+	//converts the Unity world position of the lure into real world coordinates
+	private void ConvertUnityPositionToGPS(Vector3 lurePosition, out double lureLat, out double lureLon)
+	{
+		//calculate the offset in Unity space
+		Vector3 offset = lurePosition - transform.position;
+
+		//convert the offset to meters
+		double offsetX = offset.x * _metersPerUnit;
+		double offsetZ = offset.z * _metersPerUnit;
+
+		//calculate the latitude and longitude offsets
+		double deltaLat = (offsetZ / _EarthRadius) * (180 / Mathf.PI);
+		double deltaLon = (offsetX / (_EarthRadius * Mathf.Cos((float)(_playerLat * Mathf.PI / 180)))) * (180 / Mathf.PI);
+
+		//calculate the lures real world latitude and longitude
+		lureLat = _playerLat + deltaLat;
+		lureLon = _playerLon + deltaLon;
+	}
 	#endregion
 
 	#region EVENT HANDLERS
@@ -183,25 +222,30 @@ public class FishingRodController : MonoBehaviour
 	}
 
 	//handles what happens if the lure lands in water
-	private void HandleLandedOnWater()
+	private void HandleLandedOnWater(bool onWater)
 	{
-		//subscribe to relevant events
-		TouchManager.E_LurePulled += HandleLurePulled;
+		if (onWater)
+		{
+			//subscribe to relevant events
+			//TouchManager.E_LurePulled += HandleLurePulled;
 
-		Debug.Log("LANDED ON WATER");
-		GenerateRandomWaitTime(_minWaitTime, _maxWaitTime);
-		ChangeFishingState(FishingStates.Waiting);
+			Debug.Log("LANDED ON WATER");
+			GenerateRandomWaitTime(_minWaitTime, _maxWaitTime);
+			ChangeFishingState(FishingStates.Waiting);
+		}
+		else
+		{
+			Debug.Log("LANDED ON GROUND");
 
-		//unsubscribe from events
-		LureController.E_LandedOnWater -= HandleLandedOnWater;
-		LureController.E_LandedOnGround -= HandleLandedOnGround;
+			ResetToIdle();
+		}
 	}
 
 	//handles what happens if the lure lands on the ground
 	private void HandleLandedOnGround()
 	{
 		//unsubscribe from events
-		LureController.E_LandedOnWater -= HandleLandedOnWater;
+		//LureController.E_LandedOnWater -= HandleLandedOnWater;
 		LureController.E_LandedOnGround -= HandleLandedOnGround;
 
 		Debug.Log("LANDED ON GROUND");
