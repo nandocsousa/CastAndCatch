@@ -65,53 +65,12 @@ public class FishingSystem : MonoBehaviour
         }
     }
 
-
     private void UpdateFishCountUI()
     {
         //Debug.Log($"Updating UI: Bronze: {bronzeCount}, Silver: {silverCount}, Gold: {goldCount}");
         bronzeFishText.text = bronzeCount.ToString();
         silverFishText.text = silverCount.ToString();
         goldFishText.text = goldCount.ToString();
-    }
-
-    public void SellFish(Item fishItem) // Sell a specific type of fish
-    {
-        if (InventoryManager.inventoryManager.inventory.Contains(fishItem))
-        {
-            InventoryManager.inventoryManager.RemoveFish(fishItem);
-            UpdateFishQualityCount(fishItem.quality, -1); // Update count when a fish is sold
-            UpdateFishCountUI(); // Update UI
-
-            Debug.Log($"Sold {fishItem.itemName} for {fishItem.sellPrice} coins.");
-        }
-        else Debug.Log("Fish not found in inventory.");
-    }
-
-    public void SellBronzeFish()
-    {
-        SellFishOfQuality("Bronze");
-    }
-
-    public void SellSilverFish()
-    {
-        SellFishOfQuality("Silver");
-    }
-
-    public void SellGoldFish()
-    {
-        SellFishOfQuality("Gold");
-    }
-
-    private void SellFishOfQuality(string fishQuality)
-    {
-        // Find a fish of the specified quality in the inventory
-        Item fishToSell = InventoryManager.inventoryManager.inventory.Find(f => f.quality == fishQuality);
-
-        if (fishToSell != null)
-        {
-            SellFish(fishToSell); // Sell the fish
-        }
-        else Debug.Log($"No {fishQuality} fish available to sell.");
     }
 
     // Temporary method to add a fish

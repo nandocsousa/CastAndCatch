@@ -6340,6 +6340,7 @@ GameObject:
   - component: {fileID: 1606132814}
   - component: {fileID: 1606132813}
   - component: {fileID: 1606132815}
+  - component: {fileID: 1606132816}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -6405,6 +6406,18 @@ MonoBehaviour:
   bronzeFishText: {fileID: 1157645916}
   silverFishText: {fileID: 1097532759}
   goldFishText: {fileID: 924174019}
+--- !u!114 &1606132816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606132811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058efca59b0811048bce835066c1dda6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1636291142
 GameObject:
   m_ObjectHideFlags: 0
