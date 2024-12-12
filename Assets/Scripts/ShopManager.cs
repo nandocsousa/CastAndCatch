@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class ShopManager : MonoBehaviour
     public FishingSystem fishingSystem;
 
     private SaveLoad saveLoad;
+
+    public GameObject bronzeRod;
+    public GameObject silverRod;
+    public Button silverRodButton;
+    public GameObject goldRod;
+    public Button goldRodButton;
 
     private void Start()
     {
@@ -54,5 +61,27 @@ public class ShopManager : MonoBehaviour
     private void UpdateCoinsUI()
     {
         coinsText.text = $"{playerCoins} coins";
+    }
+
+    public void BuySilverRod()
+    {
+        bronzeRod.SetActive(false);
+        silverRod.SetActive(true);
+        goldRod.SetActive(false);
+        playerCoins -= 50;
+        UpdateCoinsUI(); // Update the UI to the new coin count
+        silverRodButton.interactable = false;
+        saveLoad.SavePlayerData(playerCoins); // Save the updated coins
+    }
+
+    public void BuyGoldRod()
+    {
+        bronzeRod.SetActive(false);
+        silverRod.SetActive(false);
+        goldRod.SetActive(true);
+        playerCoins -= 150;
+        UpdateCoinsUI(); // Update the UI to the new coin count
+        goldRodButton.interactable = false;
+        saveLoad.SavePlayerData(playerCoins); // Save the updated coins
     }
 }
