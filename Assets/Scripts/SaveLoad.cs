@@ -11,12 +11,14 @@ public class SaveLoad : MonoBehaviour
     public class SaveData
     {
         public int playerCoins;
+        public string currentRod;
     }
 
-    public void SavePlayerData(int coins) // Save the player's data
+    public void SavePlayerData(int coins, string rod) // Save the player's data
     {
         SaveData data = new SaveData();
         data.playerCoins = coins;
+        data.currentRod = rod;
 
         string json = JsonConvert.SerializeObject(data, Formatting.Indented); // Serialize the data to a JSON string
         string filePath = Path.Combine(Application.persistentDataPath, SaveFileName); // Save to a persistent path
@@ -25,7 +27,7 @@ public class SaveLoad : MonoBehaviour
         Debug.Log($"Player data saved to {filePath}");
     }
 
-    public int LoadPlayerData() // Load the player's data
+    public SaveData LoadPlayerData() // Load the player's data
     {
         string filePath = Path.Combine(Application.persistentDataPath, SaveFileName); // Path to the save file
 
@@ -35,12 +37,12 @@ public class SaveLoad : MonoBehaviour
             SaveData data = JsonConvert.DeserializeObject<SaveData>(json); // Deserialize the JSON into a SaveData object
 
             Debug.Log($"Player data loaded from {filePath}");
-            return data.playerCoins; // Return the player's coin count
+            return data; // Return the player's coin count
         }
         else
         {
             Debug.Log("No save file found. Returning default value.");
-            return 0; // Return 0 if no file exists
+            return new SaveData { playerCoins = 0, currentRod = "Bronze" }; ; // Default values
         }
     }
 }

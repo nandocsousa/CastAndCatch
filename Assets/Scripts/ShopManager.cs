@@ -20,8 +20,13 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         saveLoad = FindObjectOfType<SaveLoad>(); // Find the SaveLoad script
-        playerCoins = saveLoad.LoadPlayerData(); // Load the player's saved coins
+        var savedData = saveLoad.LoadPlayerData(); // Load the player's saved data
+
+        playerCoins = savedData.playerCoins; // Load saved coins
         UpdateCoinsUI();
+
+        // Set the current rod based on the saved data
+        SetRod(savedData.currentRod);
     }
 
     public void SellFish(string fishQuality) // Sell a specific type of fish
@@ -36,7 +41,7 @@ public class ShopManager : MonoBehaviour
             playerCoins += fishToSell.sellPrice; // Add the fish's price to the player's coins
             UpdateCoinsUI(); // Update the UI to the new coin count
 
-            saveLoad.SavePlayerData(playerCoins); // Save the updated coins
+            saveLoad.SavePlayerData(playerCoins, GetCurrentRodType()); // Save the updated coins
 
             Debug.Log($"Sold a {fishQuality} fish for {fishToSell.sellPrice} coins. Current coins: {playerCoins}");
         }
@@ -68,10 +73,12 @@ public class ShopManager : MonoBehaviour
         bronzeRod.SetActive(false);
         silverRod.SetActive(true);
         goldRod.SetActive(false);
+
         playerCoins -= 50;
         UpdateCoinsUI(); // Update the UI to the new coin count
+
         silverRodButton.interactable = false;
-        saveLoad.SavePlayerData(playerCoins); // Save the updated coins
+        saveLoad.SavePlayerData(playerCoins, "Silver"); // Save the updated coins and rod type
     }
 
     public void BuyGoldRod()
@@ -79,9 +86,28 @@ public class ShopManager : MonoBehaviour
         bronzeRod.SetActive(false);
         silverRod.SetActive(false);
         goldRod.SetActive(true);
+
         playerCoins -= 150;
         UpdateCoinsUI(); // Update the UI to the new coin count
+
         goldRodButton.interactable = false;
-        saveLoad.SavePlayerData(playerCoins); // Save the updated coins
+        saveLoad.SavePlayerData(playerCoins, "Gold"); // Save the updated coins and rod type
+    }
+
+    private void SetRod(string rodType) // Method to set the rod based on saved data
+    {
+        bronzeRod.SetActive(rodType == "Bronze");
+        silverRod.SetActive(rodType == "Silver");
+        goldRod.SetActive(rodType == "Gold");
+
+        silverRodButton.interactable = rodType != "Silver";
+        goldRodButton.interactable = rodType != "Gold";
+    }
+
+    private string GetCurrentRodType()
+    {
+        if (silverRod.activeSelf) return "Silver";
+        if (goldRod.activeSelf) return "Gold";
+        return "Bronze"; // Default to Bronze rod
     }
 }
