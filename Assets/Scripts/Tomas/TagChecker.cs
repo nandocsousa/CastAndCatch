@@ -13,8 +13,8 @@ public class TagChecker : MonoBehaviour
     private const string OverpassUrl = "https://overpass-api.de/api/interpreter";
     //public double testLatitude = 41.146246;
     //public double testLongitude = -8.626450;
-    public TextMeshProUGUI isonwatertext; //for testing, remove after
-    public TextMeshProUGUI landedonwatertext;
+    //public TextMeshProUGUI isonwatertext; //for testing, remove after
+    //public TextMeshProUGUI landedonwatertext;
     private bool iswater = false; //for testing, remove after
     private double latitude;
     private double longitude;
@@ -38,11 +38,11 @@ public class TagChecker : MonoBehaviour
     {
         if (iswater)
         {
-			landedonwatertext.text = "LANDED WATER: TRUE";
+			//landedonwatertext.text = "LANDED WATER: TRUE";
         }
         else
         {
-			landedonwatertext.text = "LANDED WATER: FALSE";
+			//landedonwatertext.text = "LANDED WATER: FALSE";
         }
     }
 

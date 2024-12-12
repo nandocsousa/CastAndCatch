@@ -21,7 +21,7 @@ public class FishingRodController : MonoBehaviour
 	[SerializeField] private Rigidbody _lureRigidbody; //the lure rigidbody
 	[SerializeField] private LineRenderer _lureLineRenderer; //line renderer between the rod and the lure
 	private GameObject _currentLure; //the current active lure
-	public TextMeshProUGUI _statetext; //temporary remove after
+	//public TextMeshProUGUI _statetext; //temporary remove after
 
 	[Header("VALUES")]
 	[SerializeField] private float _minLaunchSpeed = 1.5f; //minimum speed to start launching lure
@@ -71,7 +71,7 @@ public class FishingRodController : MonoBehaviour
 
     private void Update()
 	{
-		_statetext.text = _currentState.ToString();
+		//_statetext.text = _currentState.ToString();
 
 		_playerLat = GameManager.Instance.GetPlayerLatitude();
 		_playerLon = GameManager.Instance.GetPlayerLongitude();

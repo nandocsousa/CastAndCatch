@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
 	private GameObject _dialog = null;
 
-	public TextMeshProUGUI _text;
+	//public TextMeshProUGUI _text;
 	#endregion
 
 	private void OnEnable()
@@ -133,11 +133,11 @@ public class GameManager : MonoBehaviour
 	{
 		if (onWater)
 		{
-			_text.text = "LANDED ON WATER TAG";
+			//_text.text = "LANDED ON WATER TAG";
 		}
 		else
 		{
-			_text.text = "LANDED ON GROUND TAG";
+			//_text.text = "LANDED ON GROUND TAG";
 		}
 	}
 	#endregion
