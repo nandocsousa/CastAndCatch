@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c13e23780ec302848a7c7a835eb79f53, type: 3}
+  m_Name: GoldFishingRod
+  m_EditorClassIdentifier: 
+  FishingRodPrefab: {fileID: 3145486546315867851, guid: 32d19549f466a144d806f0e7b7f5f30d, type: 3}
+  FishingRodName: Gold Fishing Rod
+  GoldCost: 50
+  ItemSprite: {fileID: 0}

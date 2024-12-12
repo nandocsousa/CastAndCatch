@@ -145,19 +145,24 @@ public class FishingRodController : MonoBehaviour
 		//get the phones rotation
 		Quaternion phoneRotation = Input.gyro.attitude;
 
-		//adjust the rotation for portrait mode
-		Quaternion rotationFix = Quaternion.Euler(90, 0, 0);
-		Quaternion adjustedRotation = rotationFix * phoneRotation;
+		//simplify the rotation fix
+		Quaternion adjustedRotation = Quaternion.Euler(90, 0, 0) * phoneRotation;
 
-		//the forward direction taking into account the phones orientation
+		//the forward direction taking into account the phons orientation
 		Vector3 launchDirection = adjustedRotation * Vector3.forward;
 
-		//send it
+		//visualize the launch direction
+		Debug.DrawRay(_lureSpawnPoint.position, launchDirection * 5, Color.red, 5f);
+
+		//apply the force
 		lureRigidbody.AddForce(launchDirection * launchForce, ForceMode.Impulse);
+		Debug.Log($"Launch Force: {launchForce}, Launch Direction: {launchDirection}");
+
 		_peakAcceleration = 0f;
 
 		ChangeFishingState(FishingStates.Casting);
 	}
+
 
 	//generate a fixed random amount of time for the fish bite timer to wait
 	private void GenerateRandomWaitTime(float minTime, float maxTime)

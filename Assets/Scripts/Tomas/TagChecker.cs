@@ -54,7 +54,8 @@ public class TagChecker : MonoBehaviour
     public void TryCheckPointTags()
     {
         //CheckPointTags(GameManager.Instance.GetPlayerLatitude(), GameManager.Instance.GetPlayerLongitude());
-    }
+		CheckPointTags(41.147400, -8.638534);
+	}
 
     public void CheckPointTags(double latitude, double longitude)
     {
@@ -63,9 +64,10 @@ public class TagChecker : MonoBehaviour
 
     private IEnumerator FetchTags(double latitude, double longitude)
     {
-        string query = $@"[out:json];(node(around:20,{latitude},{longitude})[""natural""=""water""];way(around:20,{latitude},{longitude})[""natural""=""water""];relation(around:20,{latitude},{longitude})[""natural""=""water""];);out body;>;out skel qt;";
-        string url = $"{OverpassUrl}?data={query}";
-        Debug.Log($"Request URL: {url}");
+        string query = $@"[out:json];(node(around:100,{latitude},{longitude})[""natural""=""water""];way(around:100,{latitude},{longitude})[""natural""=""water""];relation(around:100,{latitude},{longitude})[""natural""=""water""];);out body;>;out skel qt;";
+		//string url = $"{OverpassUrl}?data={query}";
+		string url = $"{OverpassUrl}?data={UnityWebRequest.EscapeURL(query)}";
+		Debug.Log($"Request URL: {url}");
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
@@ -84,30 +86,31 @@ public class TagChecker : MonoBehaviour
         }
     }
 
-    private void ParseResponse(string jsonResponse)
-    {
-        JObject response = JObject.Parse(jsonResponse);
-        bool isInWater = false;
+	private void ParseResponse(string jsonResponse)
+	{
+		Debug.Log($"Raw Response: {jsonResponse}"); // Log the full JSON response for debugging
 
-        foreach (var element in response["elements"])
-        {
-            if (element["tags"]?["natural"]?.ToString() == "water")
-            {
-                isInWater = true;
-                iswater = true;
-                break;
-            }
-            else
-            {
-                iswater = false;
-            }
-        }
+		JObject response = JObject.Parse(jsonResponse);
+		bool isInWater = false;
+
+		foreach (var element in response["elements"])
+		{
+			Debug.Log($"Element: {element}"); // Log each element to check its contents
+
+			if (element["tags"]?["natural"]?.ToString() == "water")
+			{
+				isInWater = true;
+				iswater = true;
+				break;
+			}
+		}
 
 		E_LureLandedOnWater?.Invoke(isInWater);
 		Debug.Log($"Point is in water: {isInWater}");
-    }
+	}
 
-    private void HandleLureLandCoords(double lureLat, double lureLon)
+
+	private void HandleLureLandCoords(double lureLat, double lureLon)
     {
         CheckPointTags(lureLat, lureLon);
     }
