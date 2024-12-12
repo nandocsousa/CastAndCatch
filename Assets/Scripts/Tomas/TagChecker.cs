@@ -54,7 +54,7 @@ public class TagChecker : MonoBehaviour
     public void TryCheckPointTags()
     {
         //CheckPointTags(GameManager.Instance.GetPlayerLatitude(), GameManager.Instance.GetPlayerLongitude());
-		CheckPointTags(41.147400, -8.638534);
+		CheckPointTags(41.1430675063837, -8.65617706993687);
 	}
 
     public void CheckPointTags(double latitude, double longitude)

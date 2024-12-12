@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 //all the different possible fishing states
 public enum FishingStates { Idle, Casting, Waiting, Pulling, Paused}
@@ -20,6 +21,7 @@ public class FishingRodController : MonoBehaviour
 	[SerializeField] private Rigidbody _lureRigidbody; //the lure rigidbody
 	[SerializeField] private LineRenderer _lureLineRenderer; //line renderer between the rod and the lure
 	private GameObject _currentLure; //the current active lure
+	public TextMeshProUGUI _statetext; //temporary remove after
 
 	[Header("VALUES")]
 	[SerializeField] private float _minLaunchSpeed = 1.5f; //minimum speed to start launching lure
@@ -69,6 +71,8 @@ public class FishingRodController : MonoBehaviour
 
     private void Update()
 	{
+		_statetext.text = _currentState.ToString();
+
 		_playerLat = GameManager.Instance.GetPlayerLatitude();
 		_playerLon = GameManager.Instance.GetPlayerLongitude();
         #region FISHING STATE LOGIC
@@ -131,41 +135,77 @@ public class FishingRodController : MonoBehaviour
 		#endregion
 	}
 
-	#region GENERAL METHODS
-	//launches the lure :|
-	private void LaunchLure()
-	{
-		float launchForce = _peakAcceleration * _launchForceMultiplier;
-		GameObject lure = Instantiate(_lurePrefab, _lureSpawnPoint.position, Quaternion.identity);
-		Rigidbody lureRigidbody = lure.GetComponent<Rigidbody>();
-		_currentLure = lure; //pass the created lure into our variable
-		_lureLineRenderer.enabled = true; //turn on the fishing line
-		_lureLineRenderer.SetPosition(1, _currentLure.transform.position); //set the end position to the lure
+    #region GENERAL METHODS
+    //launches the lure :|
+    //private void LaunchLure()
+    //{
+    //	float launchForce = _peakAcceleration * _launchForceMultiplier;
+    //       //GameObject lure = Instantiate(_lurePrefab, _lureSpawnPoint.position, Quaternion.identity);
+    //       GameObject lure = Instantiate(_lurePrefab, _lureSpawnPoint.position, transform.rotation);
+    //       Rigidbody lureRigidbody = lure.GetComponent<Rigidbody>();
+    //	_currentLure = lure; //pass the created lure into our variable
+    //	_lureLineRenderer.enabled = true; //turn on the fishing line
+    //	_lureLineRenderer.SetPosition(1, _currentLure.transform.position); //set the end position to the lure
 
-		//get the phones rotation
-		Quaternion phoneRotation = Input.gyro.attitude;
+    //	//get the phones rotation
+    //	Quaternion phoneRotation = Input.gyro.attitude;
 
-		//simplify the rotation fix
-		Quaternion adjustedRotation = Quaternion.Euler(90, 0, 0) * phoneRotation;
+    //	//simplify the rotation fix
+    //	//Quaternion adjustedRotation = Quaternion.Euler(90, 0, 0) * phoneRotation;
+    //	Quaternion rotationFix = Quaternion.Euler(90,0,0);
+    //	Quaternion adjustedRotation = rotationFix * phoneRotation;
 
-		//the forward direction taking into account the phons orientation
-		Vector3 launchDirection = adjustedRotation * Vector3.forward;
+    //	//the forward direction taking into account the phons orientation
+    //	//Vector3 launchDirection = adjustedRotation * Vector3.forward;
+    //	Vector3 launchDirection = transform.rotation * (phoneRotation * Vector3.forward);
 
-		//visualize the launch direction
-		Debug.DrawRay(_lureSpawnPoint.position, launchDirection * 5, Color.red, 5f);
+    //	//visualize the launch direction
+    //	Debug.DrawRay(_lureSpawnPoint.position, launchDirection * 5, Color.red, 5f);
 
-		//apply the force
-		lureRigidbody.AddForce(launchDirection * launchForce, ForceMode.Impulse);
-		Debug.Log($"Launch Force: {launchForce}, Launch Direction: {launchDirection}");
+    //	//apply the force
+    //	lureRigidbody.AddForce(launchDirection * launchForce, ForceMode.Impulse);
+    //	Debug.Log($"Launch Force: {launchForce}, Launch Direction: {launchDirection}");
 
-		_peakAcceleration = 0f;
+    //	_peakAcceleration = 0f;
 
-		ChangeFishingState(FishingStates.Casting);
-	}
+    //	ChangeFishingState(FishingStates.Casting);
+    //}
+
+    private void LaunchLure()
+    {
+        //determine the launch force based on the peak acceleration
+        float launchForce = _peakAcceleration * _launchForceMultiplier;
+
+        //instantiate the lure at the spawn point with the correct rotation
+        GameObject lure = Instantiate(_lurePrefab, _lureSpawnPoint.position, transform.rotation);
+        Rigidbody lureRigidbody = lure.GetComponent<Rigidbody>();
+		lureRigidbody.isKinematic = false;
+        _currentLure = lure;
+
+        //enable the fishing line renderer
+        _lureLineRenderer.enabled = true;
+        _lureLineRenderer.SetPosition(1, _currentLure.transform.position);
+
+        //use the fishing rod's rotation to determine the launch direction
+        Vector3 launchDirection = transform.rotation * Vector3.forward;
+
+        //visualize the launch direction (for debugging)
+        Debug.DrawRay(_lureSpawnPoint.position, launchDirection * 5, Color.red, 5f);
+
+        //apply the launch force to the lure's rigidbody
+        lureRigidbody.AddForce(launchDirection * launchForce, ForceMode.Impulse);
+
+        //reset peak acceleration after the launch
+        _peakAcceleration = 0f;
+
+        //change the fishing state to Casting
+        ChangeFishingState(FishingStates.Casting);
+    }
 
 
-	//generate a fixed random amount of time for the fish bite timer to wait
-	private void GenerateRandomWaitTime(float minTime, float maxTime)
+
+    //generate a fixed random amount of time for the fish bite timer to wait
+    private void GenerateRandomWaitTime(float minTime, float maxTime)
 	{
 		_randomWaitTime = UnityEngine.Random.Range(minTime, maxTime);
 	}

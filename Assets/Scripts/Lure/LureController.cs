@@ -19,6 +19,10 @@ public class LureController : MonoBehaviour
 		TouchManager.E_LurePulled += HandleLurePulled;
 		FishManager.E_FishDenied += HandleFishDenied; //temporary
 		FishManager.E_FishGranted += HandleFishGranted; //temporary
+
+		FishingRodController.E_LureLanded += HandleLureLanded;
+
+		TagChecker.E_LureLandedOnWater += HandleLandedOnWater;
 	}
 
 	private void OnDisable()
@@ -26,7 +30,11 @@ public class LureController : MonoBehaviour
 		TouchManager.E_LurePulled -= HandleLurePulled;
 		FishManager.E_FishDenied -= HandleFishDenied; //temporary
 		FishManager.E_FishGranted -= HandleFishGranted; //temporary
-	}
+
+        FishingRodController.E_LureLanded -= HandleLureLanded;
+
+        TagChecker.E_LureLandedOnWater -= HandleLandedOnWater;
+    }
 
 	//test method not sure about it yet
 	private void OnCollisionEnter(Collision collision)
@@ -67,6 +75,19 @@ public class LureController : MonoBehaviour
 	private void HandleFishDenied()
 	{
 		Destroy(gameObject);
+	}
+
+	private void HandleLureLanded(double unused1, double unused2)
+	{
+		_rigidbody.isKinematic = true;
+	}
+
+	private void HandleLandedOnWater(bool isWater)
+	{
+		if (!isWater)
+		{
+			Destroy(gameObject);
+		}
 	}
 	#endregion
 }
